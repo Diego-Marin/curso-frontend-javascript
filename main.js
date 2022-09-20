@@ -8,7 +8,7 @@ const menuHamMobile = document.querySelector(".mobile-menu");
 
 //Seleccion de los elementos del aside carrito de compras
 const iconShoppingCart = document.querySelector('.navbar-shopping-cart');
-const asideProductDetail = document.querySelector('.product-detail');
+const ShopingCarContainer = document.querySelector('#ShopingCarContainer');
 
 //product container div
 const cardsContainer = document.querySelector('.cards-container');
@@ -21,10 +21,10 @@ iconShoppingCart.addEventListener('click', toogleAsideMenu_shoppingCart)
 //Funcion agregar la clase .inactive al Menu email
 function toogleDesktopMenu() {
 
-    const isMenuAsideClosed = asideProductDetail.classList.contains('inactive');
+    const isMenuAsideClosed = ShopingCarContainer.classList.contains('inactive');
     
     if (!isMenuAsideClosed) {
-        asideProductDetail.classList.add('inactive');
+        ShopingCarContainer.classList.add('inactive');
     }
 
     desktopMenu.classList.toggle('inactive');
@@ -33,10 +33,10 @@ function toogleDesktopMenu() {
 //Funcion agregar la clase .inactive al Menu mobile
 function toogleMobileMenu() {
     
-    const isMenuAsideClosed = asideProductDetail.classList.contains('inactive');
+    const isMenuAsideClosed = ShopingCarContainer.classList.contains('inactive');
     
     if (!isMenuAsideClosed) {
-        asideProductDetail.classList.add('inactive');
+        ShopingCarContainer.classList.add('inactive');
     }
 
     menuHamMobile.classList.toggle('inactive');
@@ -55,7 +55,7 @@ function toogleAsideMenu_shoppingCart(){
         desktopMenu.classList.add('inactive');
     }
 
-    asideProductDetail.classList.toggle('inactive');
+    ShopingCarContainer.classList.toggle('inactive');
 }
 
 /**/
@@ -98,44 +98,47 @@ productList.push({
     image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 });
 
-for (product of productList) {
+function renderProduct(arr){
+    for (product of arr) {
     
-    //div contenedor
-    const productCart = document.createElement('div');
-    productCart.classList.add('product-card');
-
-    //div imagen product
-    const ProductImg = document.createElement ('img');
-    ProductImg.setAttribute('src', product.image);
-
-    //div product info
-    const productInfo = document.createElement('div');
-    productInfo.classList.add('product-info');
-
-    //div product text
-    const productTextCart = document.createElement('div');
-
-    const productPrice = document.createElement('p');
-    productPrice.innerText = '$' + product.price;
-    const productName = document.createElement('p');
-    productName.innerText = product.name;
-
-    //figure
-    const productInfoFigure = document.createElement('figure');
+        //div contenedor
+        const productCart = document.createElement('div');
+        productCart.classList.add('product-card');
     
-    const iconCarShoping = document.createElement ('img');
-    iconCarShoping.setAttribute('src', './icons/bt_add_to_cart.svg');
-
-
-    //agrupacion de nodos HTML
-
-    productInfoFigure.appendChild(iconCarShoping);
-
-    productTextCart.append(productPrice, productName);
-
-    productInfo.append(productTextCart, productInfoFigure);
+        //div imagen product
+        const ProductImg = document.createElement ('img');
+        ProductImg.setAttribute('src', product.image);
     
-    productCart.append(ProductImg, productInfo);
-
-    cardsContainer.appendChild(productCart);
-}   
+        //div product info
+        const productInfo = document.createElement('div');
+        productInfo.classList.add('product-info');
+    
+        //div product text
+        const productTextCart = document.createElement('div');
+    
+        const productPrice = document.createElement('p');
+        productPrice.innerText = '$' + product.price;
+        const productName = document.createElement('p');
+        productName.innerText = product.name;
+    
+        //figure
+        const productInfoFigure = document.createElement('figure');
+        
+        const iconCarShoping = document.createElement ('img');
+        iconCarShoping.setAttribute('src', './icons/bt_add_to_cart.svg');
+    
+    
+        //agrupacion de nodos HTML
+    
+        productInfoFigure.appendChild(iconCarShoping);
+    
+        productTextCart.append(productPrice, productName);
+    
+        productInfo.append(productTextCart, productInfoFigure);
+        
+        productCart.append(ProductImg, productInfo);
+    
+        cardsContainer.appendChild(productCart);
+    };
+} 
+renderProduct(productList);
