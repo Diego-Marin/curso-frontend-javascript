@@ -10,19 +10,24 @@ const menuHamMobile = document.querySelector(".mobile-menu");
 const iconShoppingCart = document.querySelector('.navbar-shopping-cart');
 const ShopingCarContainer = document.querySelector('#ShopingCarContainer');
 
-//product container div
+//Seleccion de product container div
 const cardsContainer = document.querySelector('.cards-container');
 
-//Evento click de los elementos menu email, menu mobile
+//Seleccion del Aside product detail y icon closed product detail aside
+const asideProductDetail = document.querySelector('.ProductDetail');
+const iconCloseAsideDetailProduct = document.querySelector('.product-detail-close');
+
+//Evento click de los elementos
 menuEmail.addEventListener('click', toogleDesktopMenu)
 menuHamMobile_icon.addEventListener('click', toogleMobileMenu)
 iconShoppingCart.addEventListener('click', toogleAsideMenu_shoppingCart)
+iconCloseAsideDetailProduct.addEventListener('click', closeProductDetailAside)
 
 //Funcion agregar la clase .inactive al Menu email
 function toogleDesktopMenu() {
 
     const isMenuAsideClosed = ShopingCarContainer.classList.contains('inactive');
-    
+
     if (!isMenuAsideClosed) {
         ShopingCarContainer.classList.add('inactive');
     }
@@ -32,9 +37,9 @@ function toogleDesktopMenu() {
 
 //Funcion agregar la clase .inactive al Menu mobile
 function toogleMobileMenu() {
-    
+
     const isMenuAsideClosed = ShopingCarContainer.classList.contains('inactive');
-    
+
     if (!isMenuAsideClosed) {
         ShopingCarContainer.classList.add('inactive');
     }
@@ -47,18 +52,34 @@ function toogleAsideMenu_shoppingCart(){
 
     const isMenuMobileClosed = menuHamMobile.classList.contains('inactive');
     const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
-    
+    const isProductDetailClosed = ProductDetail.classList.contains('inactive');
+
     if (!isMenuMobileClosed) {
         menuHamMobile.classList.add('inactive');
     }
     if (!isDesktopMenuClosed) {
         desktopMenu.classList.add('inactive');
     }
+    if (!isProductDetailClosed) {
+        ProductDetail.classList.add('inactive');
+    }
 
     ShopingCarContainer.classList.toggle('inactive');
 }
 
-/**/
+//Funcion para abrir el menu aside
+function openProductDetailAside (){
+   ShopingCarContainer.classList.add('inactive');
+   ProductDetail.classList.remove('inactive');   
+}
+
+//Funcion para cerrar el menu aside
+function closeProductDetailAside(){
+    ProductDetail.classList.add('inactive');
+}
+
+
+/*Array de objetos con productos  y sus propiedades*/
 
 const productList = [];
 
@@ -100,45 +121,46 @@ productList.push({
 
 function renderProduct(arr){
     for (product of arr) {
-    
+
         //div contenedor
         const productCart = document.createElement('div');
         productCart.classList.add('product-card');
-    
+
         //div imagen product
         const ProductImg = document.createElement ('img');
         ProductImg.setAttribute('src', product.image);
-    
+        ProductImg.addEventListener('click', openProductDetailAside);
+
         //div product info
         const productInfo = document.createElement('div');
         productInfo.classList.add('product-info');
-    
+
         //div product text
         const productTextCart = document.createElement('div');
-    
+
         const productPrice = document.createElement('p');
         productPrice.innerText = '$' + product.price;
         const productName = document.createElement('p');
         productName.innerText = product.name;
-    
+
         //figure
         const productInfoFigure = document.createElement('figure');
-        
+
         const iconCarShoping = document.createElement ('img');
         iconCarShoping.setAttribute('src', './icons/bt_add_to_cart.svg');
-    
-    
+
+
         //agrupacion de nodos HTML
-    
+
         productInfoFigure.appendChild(iconCarShoping);
-    
+
         productTextCart.append(productPrice, productName);
-    
+
         productInfo.append(productTextCart, productInfoFigure);
-        
+
         productCart.append(ProductImg, productInfo);
-    
+
         cardsContainer.appendChild(productCart);
     };
-} 
+}
 renderProduct(productList);
