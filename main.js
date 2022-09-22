@@ -44,6 +44,8 @@ function toogleMobileMenu() {
         ShopingCarContainer.classList.add('inactive');
     }
 
+    closeProductDetailAside();
+
     menuHamMobile.classList.toggle('inactive');
 }
 
